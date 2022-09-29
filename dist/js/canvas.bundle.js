@@ -121,7 +121,12 @@ addEventListener('mousemove', function (event) {
   ball2.y = event.clientY;
 
   if (ball2.x + ball2.radius >= ball1.x - ball1.radius && ball2.x - ball2.radius <= ball1.x + ball1.radius && ball2.y + ball2.radius >= ball1.y - ball1.radius && ball2.y - ball2.radius <= ball1.y + ball1.radius) {
+    ball1.color = 'red';
     console.log('xd');
+    ball2.color = 'black';
+  } else {
+    ball1.color = 'black';
+    ball2.color = 'red';
   }
 });
 addEventListener('resize', function () {
