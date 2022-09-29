@@ -117,6 +117,12 @@ var colors = ['#2185C5', '#7ECEFD', '#FFF6E5', '#FF7F66']; // Event Listeners
 addEventListener('mousemove', function (event) {
   mouse.x = event.clientX;
   mouse.y = event.clientY;
+  ball2.x = event.clientX;
+  ball2.y = event.clientY;
+
+  if (ball2.x + ball2.radius >= ball1.x - ball1.radius && ball2.x - ball2.radius <= ball1.x + ball1.radius && ball2.y + ball2.radius >= ball1.y - ball1.radius && ball2.y - ball2.radius <= ball1.y + ball1.radius) {
+    console.log('xd');
+  }
 });
 addEventListener('resize', function () {
   canvas.width = innerWidth;
@@ -124,9 +130,9 @@ addEventListener('resize', function () {
   init();
 }); // Objects
 
-var _Object = /*#__PURE__*/function () {
-  function Object(x, y, radius, color) {
-    _classCallCheck(this, Object);
+var Ball = /*#__PURE__*/function () {
+  function Ball(x, y, radius, color) {
+    _classCallCheck(this, Ball);
 
     this.x = x;
     this.y = y;
@@ -134,13 +140,14 @@ var _Object = /*#__PURE__*/function () {
     this.color = color;
   }
 
-  _createClass(Object, [{
+  _createClass(Ball, [{
     key: "draw",
     value: function draw() {
       c.beginPath();
       c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
       c.fillStyle = this.color;
       c.fill();
+      c.stroke();
       c.closePath();
     }
   }, {
@@ -150,26 +157,24 @@ var _Object = /*#__PURE__*/function () {
     }
   }]);
 
-  return Object;
+  return Ball;
 }(); // Implementation
 
 
-var objects;
+var ball1;
+var ball2;
 
 function init() {
-  objects = [];
-
-  for (var i = 0; i < 400; i++) {// objects.push()
-  }
+  ball1 = new Ball(innerWidth / 2, innerHeight / 2, 100, 'black');
+  ball2 = new Ball(undefined, undefined, 30, 'red');
 } // Animation Loop
 
 
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
-  c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y); // objects.forEach(object => {
-  //  object.update()
-  // })
+  ball1.update();
+  ball2.update();
 }
 
 init();

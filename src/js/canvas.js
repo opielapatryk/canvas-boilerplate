@@ -1,4 +1,4 @@
-import utils from './utils'
+import utils, { randomIntFromRange } from './utils'
 
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
@@ -17,6 +17,11 @@ const colors = ['#2185C5', '#7ECEFD', '#FFF6E5', '#FF7F66']
 addEventListener('mousemove', (event) => {
   mouse.x = event.clientX
   mouse.y = event.clientY
+  ball2.x = event.clientX
+  ball2.y = event.clientY
+  if(ball2.x + ball2.radius >= ball1.x - ball1.radius && ball2.x - ball2.radius <= ball1.x + ball1.radius && ball2.y + ball2.radius >= ball1.y - ball1.radius && ball2.y - ball2.radius <= ball1.y + ball1.radius){
+    console.log('xd')
+  }
 })
 
 addEventListener('resize', () => {
@@ -27,7 +32,7 @@ addEventListener('resize', () => {
 })
 
 // Objects
-class Object {
+class Ball {
   constructor(x, y, radius, color) {
     this.x = x
     this.y = y
@@ -40,6 +45,7 @@ class Object {
     c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
     c.fillStyle = this.color
     c.fill()
+    c.stroke()
     c.closePath()
   }
 
@@ -49,25 +55,21 @@ class Object {
 }
 
 // Implementation
-let objects
+let ball1 
+let ball2
 function init() {
-  objects = []
-
-  for (let i = 0; i < 400; i++) {
-    // objects.push()
-  }
+  ball1 = new Ball(innerWidth/2,innerHeight/2,100,'black')
+  ball2 = new Ball(undefined,undefined,30,'red')
+  
 }
 
 // Animation Loop
 function animate() {
   requestAnimationFrame(animate)
   c.clearRect(0, 0, canvas.width, canvas.height)
-
-  c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y)
-  // objects.forEach(object => {
-  //  object.update()
-  // })
-}
+  ball1.update()
+  ball2.update()
+  }
 
 init()
 animate()
